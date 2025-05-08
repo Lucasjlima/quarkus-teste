@@ -1,6 +1,7 @@
 package fiap.tds.resource;
 
 import fiap.tds.dtos.UserDTO;
+import fiap.tds.dtos.UserReponseDTO;
 import fiap.tds.services.UserService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
@@ -33,8 +34,23 @@ public class UserRegisterResource {
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUserById(@PathParam("id") Long id){
+    public Response findById(@PathParam("id") Long id){
         var user = userService.findById(id);
-        return Response.ok(user.username).build();
+        if(user == null){
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        var response = new UserReponseDTO(user.username, user.position);
+        return Response.ok(response).build();
+    }
+
+    @DELETE
+    @Path("/{id}")
+    public Response deleteById(@PathParam("id") Long id){
+        var user = userService.deleteById(id);
+        if (user == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        var response = new UserReponseDTO(user.username, user.position);
+        return Response.noContent().entity(response).build();
     }
 }

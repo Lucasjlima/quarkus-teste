@@ -1,13 +1,14 @@
 package fiap.tds.dtos;
 
-public class UserDTO {
+
+
+
+public class UserReponseDTO {
     public String username;
-    public String password;
     public String position;
 
-    public UserDTO(String username, String password, String position) {
+    public UserReponseDTO(String username, String position) {
         this.username = username;
-        this.password = password;
         this.position = position;
     }
 }

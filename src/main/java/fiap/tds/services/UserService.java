@@ -1,6 +1,7 @@
 package fiap.tds.services;
 
 import fiap.tds.dtos.UserDTO;
+import fiap.tds.dtos.UserReponseDTO;
 import fiap.tds.models.User;
 import fiap.tds.repositores.UserRepository;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -24,6 +25,7 @@ public class UserService {
         var user = new User();
         user.username = userDTO.username;
         user.password = userDTO.password;
+        user.position = userDTO.position;
         user.persist();
     }
 
@@ -41,6 +43,7 @@ public class UserService {
         if(user != null){
             user.username = userDTO.username;
             user.password = userDTO.password;
+            user.position = userDTO.position;
 
         }
         else{
@@ -54,5 +57,18 @@ public class UserService {
             throw new NotFoundException("Usuário não foi encontrado!");
         }
         return user;
+    }
+
+    @Transactional
+    public User deleteById(Long id){
+        var user = userRepository.findById(id);
+        if(user != null){
+            userRepository.delete(user);
+            return user;
+        }
+        else{
+            throw new NotFoundException("Usuário não foi encontrado!");
+        }
+
     }
 }
