@@ -23,9 +23,7 @@ public class HomeResource {
         if(name == null){
             return Response.status(Response.Status.NOT_FOUND).entity("Usuário não encontrado!").build();
         }
-        HomeDTO homeDTO = new HomeDTO();
-        homeDTO.message = "Bem-Vindo ao site de alertas da CCR!";
-        homeDTO.user = name;
+        HomeDTO homeDTO = new HomeDTO("Bem-Vindo ao site de alertas da CCR!", "Olá, " + name);
         return Response.ok(homeDTO).build();
     }
 }

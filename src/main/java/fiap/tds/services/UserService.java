@@ -18,21 +18,23 @@ public class UserService {
 
     public boolean login(String username, String password) {
         var user = userRepository.findByUsername(username);
-        return user != null && user.password.equals(password);
+        return user != null && user.getPassword().equals(password);
     }
+
     @Transactional
+    // Verify if this method is functional yet after the refactor
     public void register(UserDTO userDTO){
         var user = new User();
-        user.username = userDTO.username;
-        user.password = userDTO.password;
-        user.position = userDTO.position;
-        user.persist();
+        user.setUsername(userDTO.getUsername());
+        user.setPassword(userDTO.getPassword());
+        user.setPosition(userDTO.getPosition());
+        userRepository.persistUser(user);
     }
 
     public String searchUserName(String username){
         var user = userRepository.findByUsername(username);
         if (user != null){
-            return user.username;
+            return user.getUsername();
         }
         return null;
     }
@@ -41,9 +43,9 @@ public class UserService {
     public void updateUser(Long id, UserDTO userDTO){
         var user = userRepository.findById(id);
         if(user != null){
-            user.username = userDTO.username;
-            user.password = userDTO.password;
-            user.position = userDTO.position;
+            user.setUsername(userDTO.getUsername());
+            user.setPassword(userDTO.getPassword());
+            user.setPosition(userDTO.getPosition());
 
         }
         else{

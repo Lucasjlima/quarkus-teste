@@ -11,6 +11,11 @@ public class UserRepository implements PanacheRepository<User> {
         return find("username", username).firstResult();
     }
 
+    public void persistUser(User user){
+        user.persist();
+    }
+
+
 
 
     //public User findById(Long id){

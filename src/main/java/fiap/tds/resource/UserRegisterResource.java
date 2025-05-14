@@ -39,7 +39,7 @@ public class UserRegisterResource {
         if(user == null){
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        var response = new UserReponseDTO(user.username, user.position);
+        var response = new UserReponseDTO(user.getUsername(), user.getPosition());
         return Response.ok(response).build();
     }
 
@@ -50,7 +50,7 @@ public class UserRegisterResource {
         if (user == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        var response = new UserReponseDTO(user.username, user.position);
+        var response = new UserReponseDTO(user.getUsername(), user.getPosition());
         return Response.noContent().entity(response).build();
     }
 }

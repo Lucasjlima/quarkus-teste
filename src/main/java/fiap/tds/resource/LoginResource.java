@@ -17,7 +17,7 @@ public class LoginResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response login(LoginDTO loginDTO) {
-        boolean sucess = userService.login(loginDTO.username, loginDTO.password );
+        boolean sucess = userService.login(loginDTO.getUsername(), loginDTO.getPassword() );
         if (sucess) {
             return Response.ok("Login efetuado com sucesso!").build();
         }
