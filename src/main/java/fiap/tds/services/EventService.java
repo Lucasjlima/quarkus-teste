@@ -26,8 +26,47 @@ public class EventService {
         event.setDescription(eventDTO.getDescricao());
         event.setPosition(eventDTO.getTypeEvent().getCargoResponsavel());
         event.setDate_event(LocalDateTime.now());
-        event.setStatus(Status.EM_ANDAMENTO);
+        event.setStatus(Status.SEM_RESPOSTA);
         eventRepository.persistEvent(event);
 
     }
+
+    //This method will be used to get all events for position, GET request
+    public List<Event> getAllEventsByPosition(String position){
+        var events = eventRepository.getAllEvents();
+        return events.stream()
+                .filter(e -> e.getPosition().equals(position))
+                .toList();
+    }
+
+    //This method will be used to get events by position and methods that has the status FINALIZADO, GET request
+    public List<Event> getAllResolvedEventsByPosition(String position){
+        var events = eventRepository.getAllEvents();
+        return events.stream()
+                .filter(e -> e.getPosition().equals(position)
+                        && e.getStatus().equals(Status.FINALIZADO))
+                .toList();
+    }
+
+
+
+    //This method will resolve the event, PUT request
+    @Transactional
+    public void resolveEvent(Long id){
+        var event = eventRepository.findById(id);
+        if(event != null){
+            event.setStatus(Status.FINALIZADO);
+            eventRepository.persistEvent(event);
+        }
+    }
+
+    //This method will be used to get all events only for ADMIN, GET request
+    public List<Event> getAllEvents(){
+        var events = eventRepository.getAllEvents();
+        return events.stream()
+                .toList();
+    }
+
+
+
 }
