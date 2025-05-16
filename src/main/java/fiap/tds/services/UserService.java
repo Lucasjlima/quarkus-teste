@@ -42,6 +42,9 @@ public class UserService {
         return null;
     }
 
+
+    //This is the official method to update the user
+    /*
     @Transactional
     public void updateUser(Long id, UserDTO userDTO){
         var user = userRepository.findById(id);
@@ -54,6 +57,35 @@ public class UserService {
         else{
             throw new NotFoundException("Usuário não foi encontrado!");
         }
+    }
+
+     */
+
+    //This is the better version of the update method
+    @Transactional
+    public void updateUser(Long id, UserDTO userDTO){
+        var user = userRepository.findById(id);
+        if(user == null){
+            log.error("usuario nao encontrado");
+            throw new NotFoundException("Usuário não foi encontrado!");
+        }
+        if(userDTO.getUsername() != null){
+            user.setUsername(userDTO.getUsername());
+        }
+        if(userDTO.getPassword() != null){
+            user.setPassword(userDTO.getPassword());
+        }
+        if(userDTO.getPosition() != null){
+            user.setPosition(userDTO.getPosition());
+        }
+        userRepository.persistUser(user);
+    }
+
+    //This method works like the official method to update the user, and it is more efficient
+    @Transactional
+    public void update(Long id,UserDTO userDTO){
+        userRepository.update("username = ?1, password = ?2, position = ?3 where id = ?4",
+                userDTO.getUsername(), userDTO.getPassword(), userDTO.getPosition(), id);
     }
 
     public User findById(Long id) {
