@@ -17,11 +17,13 @@ public class UserRegisterResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response register(UserDTO userDTO){
+    public Response register(UserDTO userDTO) {
         userService.register(userDTO);
         return Response.status(Response.Status.CREATED).entity("Usuário cadastrado com sucesso!").build();
     }
 
+    //This is the official method to update the user
+    /*
     @PUT
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -30,13 +32,42 @@ public class UserRegisterResource {
         userService.updateUser(id, userDTO);
         return Response.ok("Usuário foi atualizado com sucesso!").build();
     }
+     */
+
+
+    //I'll test this variation of the update method
+    /*
+    @PUT
+    @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response update(@PathParam("id") Long id, UserDTO userDTO){
+        userService.update(id, userDTO);
+        return Response.ok("Usuário foi atualizado com sucesso!").build();
+    }
+
+     */
+
+
+
+    //I'll test this another variation of the update method
+    @PUT
+    @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateUser(@PathParam("id") Long id, UserDTO userDTO) {
+        userService.updateUser(id, userDTO);
+        return Response.ok("Usuário foi atualizado com sucesso!").build();
+    }
+
+
 
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response findById(@PathParam("id") Long id){
+    public Response findById(@PathParam("id") Long id) {
         var user = userService.findById(id);
-        if(user == null){
+        if (user == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
         var response = new UserReponseDTO(user.getUsername(), user.getPosition());
@@ -45,7 +76,7 @@ public class UserRegisterResource {
 
     @DELETE
     @Path("/{id}")
-    public Response deleteById(@PathParam("id") Long id){
+    public Response deleteById(@PathParam("id") Long id) {
         var user = userService.deleteById(id);
         if (user == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
