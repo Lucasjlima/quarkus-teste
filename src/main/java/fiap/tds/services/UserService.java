@@ -8,10 +8,12 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.NotFoundException;
+import lombok.extern.slf4j.Slf4j;
+
 
 @ApplicationScoped
 public class UserService {
-
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(UserService.class);
     @Inject
     UserRepository userRepository;
 
@@ -24,6 +26,7 @@ public class UserService {
     @Transactional
     // Verify if this method is functional yet after the refactor
     public void register(UserDTO userDTO){
+        log.info("Iniciando processo de registro de usuario");
         var user = new User();
         user.setUsername(userDTO.getUsername());
         user.setPassword(userDTO.getPassword());
@@ -56,6 +59,7 @@ public class UserService {
     public User findById(Long id) {
         var user = userRepository.findById(id);
         if(user == null){
+            log.error("Usuario nao foi encontrado");
             throw new NotFoundException("Usuário não foi encontrado!");
         }
         return user;
