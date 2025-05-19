@@ -1,5 +1,6 @@
 package fiap.tds.services;
 
+import fiap.tds.dtos.LoginDTO;
 import fiap.tds.dtos.UserDTO;
 import fiap.tds.dtos.UserReponseDTO;
 import fiap.tds.models.User;
@@ -17,10 +18,21 @@ public class UserService {
     @Inject
     UserRepository userRepository;
 
-
+    //This is the first method to login;
     public boolean login(String username, String password) {
         var user = userRepository.findByUsername(username);
         return user != null && user.getPassword().equals(password);
+    }
+
+    //This is an alternative method to login; I'll test it
+    //Rangel makes The redirection to another page
+    public boolean loginUser(Long id, String password){
+        var user = userRepository.findById(id);
+        if(user == null){
+            log.error("usuario nao encontrado no banco de dados");
+            throw new NotFoundException("Usuário não foi encontrado!");
+        }
+        return user.getPassword().equals(password);
     }
 
     @Transactional

@@ -15,6 +15,10 @@ public class UserRepository implements PanacheRepository<User> {
         user.persist();
     }
 
+    public User findByPassword(String password){
+        return find("password", password).firstResult();
+    }
+
 
 
 
