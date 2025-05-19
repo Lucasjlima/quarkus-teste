@@ -1,6 +1,7 @@
 package fiap.tds.resource;
 
 import fiap.tds.dtos.EventDTO;
+import fiap.tds.dtos.TypeEventDTO;
 import fiap.tds.models.TypeEvent;
 import fiap.tds.services.EventService;
 import jakarta.inject.Inject;
@@ -28,9 +29,9 @@ public class EventResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<EventDTO> listarTiposEvento() {
+    public List<TypeEventDTO> listarTiposEvento() {
         return Arrays.stream(TypeEvent.values())
-                .map(t -> new EventDTO(t, t.getCargoResponsavel(), t.name()))
+                .map(t -> new TypeEventDTO(t.name(), t.getCargoResponsavel()))
                 .collect(Collectors.toList());
     }
 
