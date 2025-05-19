@@ -1,26 +1,28 @@
-/*
+
 package fiap.tds.dtos;
 
 public class TypeEventDTO {
-    private String tittle;
+    private String type;
     private String position;
 
-    public TypeEventDTO(String tittle, String position) {
-        this.tittle = tittle;
+    public TypeEventDTO() {
+    }
+
+    public TypeEventDTO(String type, String position) {
+        this.type = type;
         this.position = position;
     }
 
+    public String getType() {
+        return type;
+    }
 
-    public String getTittle() {
-        return tittle;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getPosition() {
         return position;
-    }
-
-    public void setTittle(String tittle) {
-        this.tittle = tittle;
     }
 
     public void setPosition(String position) {
@@ -28,5 +30,5 @@ public class TypeEventDTO {
     }
 }
 
- */
+
 
