@@ -25,7 +25,7 @@ public class LoginResource {
             // Obtém o cargo do usuário
             String cargo = userService.getCargo(loginDTO.getUsername());
 
-            // Cria um mapa com o cargo para retornar como JSON
+            // Cria um mapa com o cargo para retornar como JSONa
             Map<String, String> resposta = new HashMap<>();
             resposta.put("cargo", cargo);
 
