@@ -36,6 +36,7 @@ public class EventService {
         var events = eventRepository.getAllEvents();
         return events.stream()
                 .filter(e -> e.getPosition().equals(position))
+                .filter(e -> e.getStatus().equals(Status.SEM_RESPOSTA))
                 .toList();
     }
 

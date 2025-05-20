@@ -27,5 +27,11 @@ public class HistoryResource {
 
 
     //This get will be used to get the history of all events only for ADMIN
-    //@GET
+    @GET
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/admin")
+    public Response getAllEvents(){
+        var events = eventService.getAllEvents();
+        return Response.ok(events).build();
+    }
 }
