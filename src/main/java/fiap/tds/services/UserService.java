@@ -35,6 +35,15 @@ public class UserService {
         return user.getPassword().equals(password);
     }
 
+    public String getCargo(String username) {
+        var user = userRepository.findByUsername(username);
+        if (user == null) {
+            log.error("Usuário não encontrado para username: " + username);
+            throw new NotFoundException("Usuário não foi encontrado!");
+        }
+        return user.getPosition();
+    }
+
     @Transactional
     // Verify if this method is functional yet after the refactor
     public void register(UserDTO userDTO){
