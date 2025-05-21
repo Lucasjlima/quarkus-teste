@@ -27,8 +27,10 @@ public class MonitorEventResource {
     @Path("/{id}")
     public Response reportEvent(@PathParam("id") Long id){
         eventService.resolveEvent(id);
-        return Response.ok("Evento resolvido com sucesso!").build();
+        return Response.ok("Status do evento foi atualizado com sucesso!").build();
     }
+
+
 
 
     @GET
