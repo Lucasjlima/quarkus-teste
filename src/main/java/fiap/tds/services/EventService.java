@@ -51,23 +51,36 @@ public class EventService {
 
 
 
-    //This method will resolve the event, PUT request
+    //This method will resolve the event, PUT request, by the order of the status
     @Transactional
     public void resolveEvent(Long id){
         var event = eventRepository.findById(id);
         if(event != null){
-            event.setStatus(Status.FINALIZADO);
+            if(event.getStatus().equals(Status.SEM_RESPOSTA)){
+                event.setStatus(Status.EM_ANDAMENTO);
+            } else if (event.getStatus().equals(Status.EM_ANDAMENTO)){
+                event.setStatus(Status.FINALIZADO);
+            }
             eventRepository.persistEvent(event);
         }
     }
 
     //This method will be used to get all events only for ADMIN, GET request
+    //Rangel will implement this method, yet
     public List<Event> getAllEvents(){
         var events = eventRepository.getAllEvents();
         return events.stream()
                 .toList();
     }
 
+    //This method will be used to update an event to AJUDA_SOLICITADA in the database and also the path MonitorEventResource
+    public void requestHelp(Long id){
+        var event = eventRepository.findById(id);
+        if(event != null){
+            event.setStatus(Status.AJUDA_SOLICITADA);
+            eventRepository.persistEvent(event);
+        }
+    }
 
 
 }
