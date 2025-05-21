@@ -8,6 +8,8 @@ import java.util.List;
 
 @ApplicationScoped
 public class EventRepository implements PanacheRepository<Event> {
+
+
     public Event findByName(String name) {
         return find("name", name).firstResult();
     }
