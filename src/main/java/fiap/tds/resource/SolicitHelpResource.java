@@ -4,6 +4,7 @@ import fiap.tds.dtos.HelpEventDTO;
 import fiap.tds.dtos.TypeEventDTO;
 import fiap.tds.models.Status;
 import fiap.tds.models.TypeEvent;
+import fiap.tds.repositores.EventRepository;
 import fiap.tds.services.EventService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
@@ -18,6 +19,8 @@ import java.util.stream.Collectors;
 public class SolicitHelpResource {
     @Inject
     EventService eventService;
+
+
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -38,7 +41,7 @@ public class SolicitHelpResource {
     @Path("/{id}")
     public Response requestHelp(@PathParam("id") Long id){
         eventService.requestHelp(id);
-        return Response.ok( "Status do evento foi atualizado com sucesso!").build();
+        return Response.status(Response.Status.OK).entity("Ajuda solicitada com sucesso!").build();
     }
 
 }
