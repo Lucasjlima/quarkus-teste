@@ -35,7 +35,7 @@ public class SolicitHelpResource {
                 .collect(Collectors.toList());
     }
 
-    //I need to create a PUT method to update the status of some event to AJUDA_SOLICITADA
+
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)

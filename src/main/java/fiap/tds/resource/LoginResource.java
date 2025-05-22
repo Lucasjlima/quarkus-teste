@@ -22,10 +22,8 @@ public class LoginResource {
     public Response login(LoginDTO loginDTO) {
         boolean success = userService.login(loginDTO.getUsername(), loginDTO.getPassword());
         if (success) {
-            // Obtém o cargo do usuário
             String cargo = userService.getCargo(loginDTO.getUsername());
 
-            // Cria um mapa com o cargo para retornar como JSON
             Map<String, String> resposta = new HashMap<>();
             resposta.put("cargo", cargo);
 

@@ -29,7 +29,7 @@ public class EventService {
         event.setDate_event(LocalDateTime.now());
         event.setStatus(Status.SEM_RESPOSTA);
         eventRepository.persistEvent(event);
-
+        log.info("Evento reportado com sucesso!");
     }
 
     //This method will be used to get all events for position, GET request
@@ -65,6 +65,7 @@ public class EventService {
                 event.setStatus(Status.EM_ANDAMENTO);
             }
             eventRepository.persistEvent(event);
+            log.info("Evento foi resolvido e atualizado com sucesso!");
         }
     }
 

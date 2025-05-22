@@ -22,33 +22,6 @@ public class UserRegisterResource {
         return Response.status(Response.Status.CREATED).entity("Usuário cadastrado com sucesso!").build();
     }
 
-    //This is the official method to update the user
-    /*
-    @PUT
-    @Path("/{id}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response updateUser(@PathParam("id") Long id, UserDTO userDTO){
-        userService.updateUser(id, userDTO);
-        return Response.ok("Usuário foi atualizado com sucesso!").build();
-    }
-     */
-
-
-    //I'll test this variation of the update method
-    /*
-    @PUT
-    @Path("/{id}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response update(@PathParam("id") Long id, UserDTO userDTO){
-        userService.update(id, userDTO);
-        return Response.ok("Usuário foi atualizado com sucesso!").build();
-    }
-
-     */
-
-
 
     //I'll test this another variation of the update method
     @PUT

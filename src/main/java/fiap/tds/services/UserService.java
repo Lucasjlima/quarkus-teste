@@ -24,19 +24,9 @@ public class UserService {
         return user != null && user.getPassword().equals(password);
     }
 
-    //This is an alternative method to login; I'll test it
-    //Rangel makes The redirection to another page
-    public boolean loginUser(Long id, String password){
-        var user = userRepository.findById(id);
-        if(user == null){
-            log.error("usuario nao encontrado no banco de dados");
-            throw new NotFoundException("Usuário não foi encontrado!");
-        }
-        return user.getPassword().equals(password);
-    }
 
     @Transactional
-    // Verify if this method is functional yet after the refactor
+    // This method works
     public void register(UserDTO userDTO){
         log.info("Iniciando processo de registro de usuario");
         var user = new User();
@@ -54,24 +44,6 @@ public class UserService {
         return null;
     }
 
-
-    //This is the official method to update the user
-    /*
-    @Transactional
-    public void updateUser(Long id, UserDTO userDTO){
-        var user = userRepository.findById(id);
-        if(user != null){
-            user.setUsername(userDTO.getUsername());
-            user.setPassword(userDTO.getPassword());
-            user.setPosition(userDTO.getPosition());
-
-        }
-        else{
-            throw new NotFoundException("Usuário não foi encontrado!");
-        }
-    }
-
-     */
 
     //This is the better version of the update method
     @Transactional
@@ -91,13 +63,7 @@ public class UserService {
             user.setPosition(userDTO.getPosition());
         }
         userRepository.persistUser(user);
-    }
-
-    //This method works like the official method to update the user, and it is more efficient
-    @Transactional
-    public void update(Long id,UserDTO userDTO){
-        userRepository.update("username = ?1, password = ?2, position = ?3 where id = ?4",
-                userDTO.getUsername(), userDTO.getPassword(), userDTO.getPosition(), id);
+        log.info("Usuario foi atualizado com sucesso");
     }
 
     public User findById(Long id) {
@@ -114,6 +80,7 @@ public class UserService {
         var user = userRepository.findById(id);
         if(user != null){
             userRepository.delete(user);
+            log.info("usuario foi deletado com sucesso");
             return user;
         }
         else{
@@ -122,11 +89,11 @@ public class UserService {
 
     }
 
-    //This method is used to verify the postion
+    //This method is used to verify the position
     public String getCargo(String username) {
         var user = userRepository.findByUsername(username);
         if (user == null) {
-            log.error("Usuário não encontrado para username: " + username);
+            log.error("Usuário não encontrado para username: {}",username);
             throw new NotFoundException("Usuário não foi encontrado!");
         }
         return user.getPosition();
