@@ -61,6 +61,8 @@ public class EventService {
                 event.setStatus(Status.EM_ANDAMENTO);
             } else if (event.getStatus().equals(Status.EM_ANDAMENTO)){
                 event.setStatus(Status.FINALIZADO);
+            } else if (event.getStatus().equals(Status.AJUDA_SOLICITADA)){
+                event.setStatus(Status.EM_ANDAMENTO);
             }
             eventRepository.persistEvent(event);
         }
@@ -77,7 +79,7 @@ public class EventService {
     //This method will be used to update an event to AJUDA_SOLICITADA in the database and also the path
     // MonitorEventResource
     @Transactional
-    public void requestHelp(Long id){
+    public void requestHelp(Long id, String descricao){
         var event = eventRepository.findById(id);
         if(event == null){
             log.info("Evento não encontrado");
@@ -88,6 +90,7 @@ public class EventService {
         }
         else if(event.getStatus().equals(Status.EM_ANDAMENTO)){
             event.setStatus(Status.AJUDA_SOLICITADA);
+            event.setDescription(descricao);
             eventRepository.persist(event);
             log.info("Ajuda solicitada com sucesso!");
         }
@@ -95,19 +98,6 @@ public class EventService {
 
 
 
-
-
-
-    /*
-    public void requestHelp(Long id){
-        var event = eventRepository.findById(id);
-        if(event != null && event.getStatus() != Status.FINALIZADO){
-            event.setStatus(Status.AJUDA_SOLICITADA);
-            eventRepository.persistEvent(event);
-        }
-    }
-
-     */
 
 
 }
