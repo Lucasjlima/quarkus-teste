@@ -13,6 +13,7 @@ import java.util.List;
 
 @ApplicationScoped
 public class EventService {
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EventService.class);
 
     @Inject
     EventRepository eventRepository;
@@ -73,14 +74,40 @@ public class EventService {
                 .toList();
     }
 
-    //This method will be used to update an event to AJUDA_SOLICITADA in the database and also the path MonitorEventResource
+    //This method will be used to update an event to AJUDA_SOLICITADA in the database and also the path
+    // MonitorEventResource
+    @Transactional
     public void requestHelp(Long id){
         var event = eventRepository.findById(id);
-        if(event != null){
+        if(event == null){
+            log.info("Evento não encontrado");
+            return;
+        }
+        if(event.getStatus().equals(Status.FINALIZADO)){
+            log.info("Este evento já foi finalizado");
+        }
+        else if(event.getStatus().equals(Status.EM_ANDAMENTO)){
+            event.setStatus(Status.AJUDA_SOLICITADA);
+            eventRepository.persist(event);
+            log.info("Ajuda solicitada com sucesso!");
+        }
+    }
+
+
+
+
+
+
+    /*
+    public void requestHelp(Long id){
+        var event = eventRepository.findById(id);
+        if(event != null && event.getStatus() != Status.FINALIZADO){
             event.setStatus(Status.AJUDA_SOLICITADA);
             eventRepository.persistEvent(event);
         }
     }
+
+     */
 
 
 }
