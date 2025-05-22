@@ -1,6 +1,7 @@
 package fiap.tds.resource;
 
 import fiap.tds.dtos.HelpEventDTO;
+import fiap.tds.dtos.HelpRequestDTO;
 import fiap.tds.dtos.TypeEventDTO;
 import fiap.tds.models.Status;
 import fiap.tds.models.TypeEvent;
@@ -30,7 +31,7 @@ public class SolicitHelpResource {
                 .filter(e-> e.getStatus().equals(Status.EM_ANDAMENTO))
                 .toList();
         return eventsFiltered.stream()
-                .map(e -> new HelpEventDTO( e.getTypeEvent().name(), e.getPosition(), e.getStatus()))
+                .map(e -> new HelpEventDTO(e.id ,e.getTypeEvent().name(), e.getPosition(), e.getStatus()))
                 .collect(Collectors.toList());
     }
 
@@ -39,9 +40,9 @@ public class SolicitHelpResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/{id}")
-    public Response requestHelp(@PathParam("id") Long id){
-        eventService.requestHelp(id);
-        return Response.status(Response.Status.OK).entity("Ajuda solicitada com sucesso!").build();
+    public Response requestHelp(@PathParam("id") Long id, HelpRequestDTO helpRequestDTO) {
+        eventService.requestHelp(id, helpRequestDTO.getDescricao());
+        return Response.ok("Status do evento foi atualizado com sucesso!").build();
     }
 
 }
